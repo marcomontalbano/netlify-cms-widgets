@@ -18,7 +18,7 @@ const createBundle = (packageName) => ({
     output: {
         file: `./dist/netlify-cms-widget-${packageName}.js`,
         format: 'iife',
-        name: `netlifyCmsWidget${capitalize(camelCase(packageName))}`
+        name: `marcomontalbano.netlifyCmsWidget${capitalize(camelCase(packageName))}`
     },
     plugins: [
         typescript(),

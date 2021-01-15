@@ -2,6 +2,12 @@
 
 :warning: Work In Progress
 
-https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-id.js
+```html
+<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-id.js"></script>
+<script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetId)</script>
+```
 
-https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-secret.js
+```html
+<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-secret.js"></script>
+<script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetSecret)</script>
+```
