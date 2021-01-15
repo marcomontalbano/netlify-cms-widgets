@@ -1,1 +1,1 @@
-# netlifycms-widgets
+# Netlify CMS • Widgets

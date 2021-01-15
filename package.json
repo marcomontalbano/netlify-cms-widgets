@@ -1,0 +1,39 @@
+{
+  "name": "netlify-cms-widgets",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "workspaces": [
+    "./packages/*"
+  ],
+  "scripts": {
+    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
+    "clean": "npx rimraf node_modules */*/node_modules",
+    "lint": "tsc --noEmit",
+    "test": "echo \"Warning: no test specified\" && exit 0",
+    "prebuild": "yarn lint && yarn test",
+    "build": "rollup -c rollup.config.js",
+    "start": "npx serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcomontalbano/netlify-cms-widgets.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcomontalbano/netlify-cms-widgets/issues"
+  },
+  "homepage": "https://github.com/marcomontalbano/netlify-cms-widgets#readme",
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@types/react": "^17.0.0",
+    "rollup": "^2.36.1",
+    "rollup-plugin-typescript": "^1.0.1",
+    "rollup-plugin-uglify": "^6.0.4",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  }
+}
