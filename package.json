@@ -2,7 +2,7 @@
   "name": "netlify-cms-widgets",
   "private": true,
   "version": "1.0.0",
-  "description": "",
+  "description": "A collection of Netlify CMS widgets.",
   "workspaces": [
     "./packages/*"
   ],
@@ -19,7 +19,12 @@
     "type": "git",
     "url": "git+https://github.com/marcomontalbano/netlify-cms-widgets.git"
   },
-  "keywords": [],
+  "keywords": [
+    "netlify",
+    "netlify-cms",
+    "cms",
+    "widget"
+  ],
   "author": "Marco Montalbano <me@marcomontalbano.com>",
   "license": "MIT",
   "bugs": {
