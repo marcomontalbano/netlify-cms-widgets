@@ -23,6 +23,7 @@ export default window.createClass<ControlProps, State, Spec>({
     render: function(this: This) {
         return (
             <input
+                data-testid="input"
                 style={{
                     backgroundColor: '#f5f5f5',
                     color: '#9E9E9E'
@@ -31,7 +32,7 @@ export default window.createClass<ControlProps, State, Spec>({
                 disabled={true}
                 value={this.props.value}
                 onChange={this.handleChange}
-                className={this.props?.classNameWrapper}
+                className={this.props.classNameWrapper}
             />
         );
     }

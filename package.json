@@ -3,7 +3,6 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
   "workspaces": [
     "./packages/*"
   ],
@@ -11,7 +10,7 @@
     "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
     "clean": "npx rimraf node_modules */*/node_modules",
     "lint": "tsc --noEmit",
-    "test": "echo \"Warning: no test specified\" && exit 0",
+    "test": "jest",
     "prebuild": "yarn lint && yarn test",
     "build": "rollup -c rollup.config.js",
     "start": "npx serve"
@@ -21,18 +20,26 @@
     "url": "git+https://github.com/marcomontalbano/netlify-cms-widgets.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Marco Montalbano <me@marcomontalbano.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/marcomontalbano/netlify-cms-widgets/issues"
   },
   "homepage": "https://github.com/marcomontalbano/netlify-cms-widgets#readme",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-typescript": "^8.1.0",
+    "@testing-library/react": "^11.2.3",
+    "@types/create-react-class": "^15.6.3",
+    "@types/jest": "^26.0.20",
     "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "create-react-class": "^15.7.0",
+    "jest": "^26.6.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "rollup": "^2.36.1",
-    "rollup-plugin-typescript": "^1.0.1",
-    "rollup-plugin-uglify": "^6.0.4",
+    "ts-jest": "^26.4.4",
     "tslib": "^2.1.0",
     "typescript": "^4.1.3"
   }

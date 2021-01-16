@@ -1,6 +1,5 @@
-import typescript from 'rollup-plugin-typescript';
+import typescript from '@rollup/plugin-typescript';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { uglify } from 'rollup-plugin-uglify';
 
 const capitalize = (s) => {
     if (typeof s !== 'string') return ''
@@ -22,8 +21,7 @@ const createBundle = (packageName) => ({
     },
     plugins: [
         typescript(),
-        nodeResolve(),
-        uglify()
+        nodeResolve()
     ]
 })
 
