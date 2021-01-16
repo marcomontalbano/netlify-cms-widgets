@@ -24,5 +24,5 @@ yarn build
 # playground
 yarn start
 
-# http://localhost:5000/playground
+# http://localhost:5000
 ```

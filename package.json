@@ -13,7 +13,7 @@
     "test": "jest --coverage",
     "prebuild": "yarn lint && yarn test",
     "build": "rollup -c rollup.config.js",
-    "start": "npx serve"
+    "start": "npx serve playground"
   },
   "repository": {
     "type": "git",

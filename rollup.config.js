@@ -12,13 +12,18 @@ const camelCase = (string) => {
     });
 }
 
+const createOutput = (packageName, pathPrefix) => ({
+    file: `${pathPrefix}/netlify-cms-widget-${packageName}.js`,
+    format: 'iife',
+    name: `marcomontalbano.netlifyCmsWidget${capitalize(camelCase(packageName))}`
+})
+
 const createBundle = (packageName) => ({
     input: `./packages/${packageName}/index.tsx`,
-    output: {
-        file: `./dist/netlify-cms-widget-${packageName}.js`,
-        format: 'iife',
-        name: `marcomontalbano.netlifyCmsWidget${capitalize(camelCase(packageName))}`
-    },
+    output: [
+        createOutput(packageName, './dist'),
+        createOutput(packageName, './playground/dist')
+    ],
     plugins: [
         typescript(),
         nodeResolve()
