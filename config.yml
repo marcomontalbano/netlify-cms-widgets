@@ -1,0 +1,25 @@
+# https://www.netlifycms.org/docs/beta-features/#working-with-a-local-git-repository
+local_backend: true
+
+backend:
+  name: test-repo
+
+media_folder: src/assets
+public_folder: /assets
+
+
+collections:
+
+  - name: "items" # Used in routes, e.g., /admin/collections/blog
+    extension: "json"
+    label: "Item" # Used in the UI
+    folder: "content/items" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{name}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "ID", name: "id", widget: "id"}
+      - {label: "Secret", name: "secret", widget: "secret"}
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Picture", name: "picture", widget: "image", required: false}
+      - {label: "Url", name: "url", widget: "string", required: false}
+      - {label: "Address", name: "address", widget: "string", required: false}
