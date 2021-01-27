@@ -13,7 +13,7 @@
     "pretest": "yarn lint",
     "test": "jest",
     "build": "rollup -c rollup.config.js",
-    "start": "npx serve playground"
+    "start": "npx concurrently -n netlify-cms-proxy-server,admin \"npx netlify-cms-proxy-server\" \"npx serve playground\""
   },
   "repository": {
     "type": "git",
