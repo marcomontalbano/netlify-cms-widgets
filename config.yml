@@ -10,16 +10,55 @@ public_folder: /assets
 
 collections:
 
-  - name: "items" # Used in routes, e.g., /admin/collections/blog
-    extension: "json"
-    label: "Item" # Used in the UI
-    folder: "content/items" # The path to the folder where the documents are stored
-    create: true # Allow users to create new documents in this collection
-    slug: "{{name}}" # Filename template, e.g., YYYY-MM-DD-title.md
-    fields: # The fields for each document, usually in front matter
-      - {label: "ID", name: "id", widget: "id"}
-      - {label: "Secret", name: "secret", widget: "secret"}
-      - {label: "Name", name: "name", widget: "string"}
-      - {label: "Picture", name: "picture", widget: "image", required: false}
-      - {label: "Url", name: "url", widget: "string", required: false}
-      - {label: "Address", name: "address", widget: "string", required: false}
+  - name: 'widgets'
+    extension: 'json'
+    label: 'Widgets'
+    label_singular: 'File'
+    files: 
+
+      - name: 'custom'
+        label: 'Custom'
+        file: 'content/custom.json'
+        fields:
+          - { label: 'ID', name: 'id', widget: 'id' }
+          - { label: 'Secret', name: 'secret', widget: 'secret' }
+
+      - name: 'default'
+        label: 'Default'
+        file: 'content/default.json'
+        fields:
+          - { widget: 'id', label: 'ID', name: 'id' }
+          - { widget: 'boolean', label: 'Bolean', name: 'bolean', default: true }
+          - { widget: 'code', label: 'Code', name: 'code' }
+          - { widget: 'color', label: 'Color', name: 'color', enableAlpha: true, allowInput: true }
+          - { widget: 'date', label: 'Date', name: 'date', default: '', format: 'MMM Do YY' }
+          - { widget: 'datetime', label: 'Datetime', name: 'datetime', default: '', date_format: 'DD.MM.YYYY', time_format: 'HH:mm', format: 'LLL', picker_utc: false }
+          - { widget: 'file', label: 'File', name: 'file' }
+          - { widget: 'hidden', label: 'Hidden', name: 'hidden', default: 'blog' }
+          - { widget: 'image', label: 'Image', name: 'image' }
+          - { widget: 'list', label: 'List', name: 'list', summary: '{{fields.image}}', field: { label: Image, name: image, widget: image } }
+          - { widget: 'map', label: 'Map', name: 'map' }
+          - { widget: 'markdown', label: 'Markdown', name: 'markdown' }
+          - { widget: 'number', label: 'Number', name: 'number', default: 2, value_type: 'int' }
+          - { widget: 'select', label: 'Select', name: 'select', options: ['left', 'center', 'right'] }
+          - { widget: 'string', label: 'String', name: 'string' }
+          - { widget: 'text', label: 'Text', name: 'text' }
+          - widget: 'object'
+            label: 'Object'
+            name: 'object'
+            summary: '{{fields.name}}: {{fields.birthdate}}'
+            fields:
+              - { label: 'Public', name: 'public', widget: 'boolean', default: true }
+              - { label: 'Name', name: 'name', widget: 'string' }
+              - label: 'Birthdate'
+                name: 'birthdate'
+                widget: 'date'
+                default: ''
+                format: 'MM/DD/YYYY'
+              - label: 'Address'
+                name: 'address'
+                widget: 'object'
+                collapsed: true
+                fields: 
+                  - { label: 'City', name: 'city', widget: 'string' }
+                  - { label: 'Postal Code', name: 'post-code', widget: 'string' }
