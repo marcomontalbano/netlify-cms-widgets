@@ -19,7 +19,7 @@ const createOutput = (packageName, pathPrefix) => ({
 })
 
 const createBundle = (packageName) => ({
-    input: `./packages/${packageName}/index.tsx`,
+    input: `./packages/widget-${packageName}/index.tsx`,
     output: [
         createOutput(packageName, './dist'),
         createOutput(packageName, './playground/dist')
