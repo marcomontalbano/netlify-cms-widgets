@@ -62,3 +62,35 @@ collections:
                 fields: 
                   - { label: 'City', name: 'city', widget: 'string' }
                   - { label: 'Postal Code', name: 'post-code', widget: 'string' }
+
+  - name: 'artists'
+    extension: 'json'
+    label: 'Artists'
+    label_singular: 'Artist'
+    folder: 'content/artists'
+    create: true
+    slug: '{{id}}'
+    fields:
+      - { label: 'ID', name: 'id', widget: 'id' }
+      - { label: 'Name', name: 'name', widget: 'string' }
+
+  - name: 'people'
+    extension: 'json'
+    label: 'People'
+    label_singular: 'Person'
+    folder: 'content/people'
+    create: true
+    slug: '{{id}}'
+    fields:
+      - { label: 'ID', name: 'id', widget: 'id' }
+      - { label: 'Firstname', name: 'firstname', widget: 'string' }
+      - { label: 'Birthdate', name: 'birthdate', widget: 'date' }
+      - { label: 'Favorite Artist', name: 'artistsId', widget: 'relation', collection: 'artists', value_field: 'id', search_fields: ['name'], display_fields: ['name'] }
+      - name: 'interests'
+        label: 'Interests'
+        label_singular: 'Interest'
+        widget: 'list'
+        summary: '{{name}}'
+        collapsed: true
+        fields: 
+          - {label: 'Artists', name: 'artistsId', widget: 'relation', collection: 'artists', multiple: true, value_field: 'id', search_fields: ['name'], display_fields: ['name']}

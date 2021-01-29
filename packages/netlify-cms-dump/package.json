@@ -1,0 +1,20 @@
+{
+  "name": "netlify-cms-dump",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mock-fs": "^4.13.0",
+    "mock-fs": "^4.13.0"
+  },
+  "dependencies": {
+    "@types/pluralize": "^0.0.29",
+    "pluralize": "^8.0.0"
+  }
+}
