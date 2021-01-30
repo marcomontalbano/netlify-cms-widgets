@@ -27,9 +27,17 @@ const resolveCollectionRelations = (contentEntries: ContentEntries, collection: 
             if (collections) {
                 const relationType = Array.isArray(id) ? 'plural' : 'singular';
                 const relationName = pluralize[relationType](relatedCollectionName)
-    
+
                 return [relationName, findInCollection<Collection>(collections, id)];
             }
+        }
+
+        if (typeof id === 'object') {
+            if (Array.isArray(id)) {
+                return [key, id.map(collection => typeof collection === 'object' ? resolveCollectionRelations(contentEntries, collection): collection)];
+            }
+
+            return [key, resolveCollectionRelations(contentEntries, id as Collection)];
         }
 
         return [key, id];
