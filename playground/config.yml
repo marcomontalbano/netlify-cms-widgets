@@ -85,12 +85,13 @@ collections:
       - { label: 'ID', name: 'id', widget: 'id' }
       - { label: 'Firstname', name: 'firstname', widget: 'string' }
       - { label: 'Birthdate', name: 'birthdate', widget: 'date' }
-      - { label: 'Favorite Artist', name: 'artistsId', widget: 'relation', collection: 'artists', value_field: 'id', search_fields: ['name'], display_fields: ['name'] }
-      - name: 'interests'
-        label: 'Interests'
-        label_singular: 'Interest'
+      - { label: 'Favorite Artist', name: 'favoriteArtist', widget: 'relation', collection: 'artists', value_field: 'id', search_fields: ['name'], display_fields: ['name'] }
+      - name: 'genres'
+        label: 'Genres'
+        label_singular: 'Genre'
         widget: 'list'
         summary: '{{name}}'
         collapsed: true
         fields: 
-          - {label: 'Artists', name: 'artistsId', widget: 'relation', collection: 'artists', multiple: true, value_field: 'id', search_fields: ['name'], display_fields: ['name']}
+          - {label: 'Name', name: 'name', widget: 'string'}
+          - {label: 'Artists', name: 'artists', widget: 'relation', collection: 'artists', multiple: true, value_field: 'id', search_fields: ['name'], display_fields: ['name']}

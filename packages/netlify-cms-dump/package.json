@@ -14,7 +14,9 @@
     "mock-fs": "^4.13.0"
   },
   "dependencies": {
+    "@types/js-yaml": "^4.0.0",
     "@types/pluralize": "^0.0.29",
+    "js-yaml": "^4.0.0",
     "pluralize": "^8.0.0"
   }
 }
