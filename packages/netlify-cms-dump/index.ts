@@ -1,6 +1,6 @@
-
-import pluralize from 'pluralize';
-import { findInCollection, getForeignKey, readNetlifyContent } from './utils';
+import dot from 'dot-object'
+import { readNetlifyContent } from './utils';
+import { getRelationsFromYaml } from './yaml';
 
 type Content = {
     [collectionName: string]: Collection | Collection[] | undefined;
@@ -12,51 +12,68 @@ type Collection = {
 
 type ContentEntries = [string, Collection | Collection[]][];
 
-const resolveCollectionRelations = (contentEntries: ContentEntries, collection: Collection): Collection => {
-    const itemEntries = Object.entries(collection).map(([key, id]) => {
-        const relatedCollectionName = getForeignKey(key)
+export const resolveNestedObjects = (keys: string[], content: { [k: string]: Collection | Collection[] }, currentIndex: number = 0, currentKey: string = '', memo: string[] = []) => {
+    const key = `${currentKey ? `${currentKey}.` : ''}${keys[currentIndex]}`;
 
-        if (relatedCollectionName) {
-            if (typeof id !== 'string' && !Array.isArray(id)) {
-                throw new Error('Relation should be sigle or array')
-            }
+    const currentContent = dot.pick(key, content)
 
-            const content: Content = Object.fromEntries(contentEntries);
-            const collections = content[relatedCollectionName];
+    if (currentIndex === keys.length) {
+        memo.push(currentKey);
+        return memo;
+    }
 
-            if (collections) {
-                const relationType = Array.isArray(id) ? 'plural' : 'singular';
-                const relationName = pluralize[relationType](relatedCollectionName)
+    if (currentContent === undefined) {
+        return [];
+    }
 
-                return [relationName, findInCollection<Collection>(collections, id)];
-            }
-        }
+    if (Array.isArray(currentContent)) {
+        currentContent.forEach((_, i) => {
+            resolveNestedObjects(keys, content, currentIndex + 1, `${key}[${i}]`, memo)
+        })
+    } else {
+        resolveNestedObjects(keys, content, currentIndex + 1, key, memo)
+    }
 
-        if (typeof id === 'object') {
-            if (Array.isArray(id)) {
-                return [key, id.map(collection => typeof collection === 'object' ? resolveCollectionRelations(contentEntries, collection): collection)];
-            }
-
-            return [key, resolveCollectionRelations(contentEntries, id as Collection)];
-        }
-
-        return [key, id];
-    });
-
-    return Object.fromEntries(itemEntries) as Collection;
-};
-
-const resolveRelations = (contentEntries: ContentEntries): ContentEntries =>
-    contentEntries.map(([collectionName, collections]) => [
-        collectionName,
-        Array.isArray(collections)
-            ? collections.map((collection) => resolveCollectionRelations(contentEntries, collection))
-            : resolveCollectionRelations(contentEntries, collections),
-    ]);
-
-const getContent = (contentPath: string): Content => {
-    const contentEntries = readNetlifyContent<Collection>(contentPath);
-    return Object.fromEntries(resolveRelations(contentEntries))
+    return memo
 }
 
-export { getContent };
+export const resolveFieldPaths = (yamlRelations: [fieldPath: string, relation: string][], content: { [k: string]: Collection | Collection[]; }) => {
+    return yamlRelations.map(([fieldPath, relation]) => {
+        return resolveNestedObjects(fieldPath.split('.'), content).map(resolvedFieldPath => ([
+            resolvedFieldPath,
+            relation
+        ]));
+    }).flat() as [string, string][];
+}
+
+export function resolveRelations(resolvedFieldPaths: [fieldPath: string, relation: string][], content: { [k: string]: Collection | Collection[]; }) {
+    return resolvedFieldPaths.map(([field, collection]) => {
+        const collectionObject = dot.pick(collection, content);
+        const fieldObject = dot.pick(field, content);
+        const collectionIndex = collectionObject.findIndex((obj: Collection) => obj.id === fieldObject);
+
+        return [
+            field,
+            `${collection}[${collectionIndex}]`
+        ];
+    });
+}
+
+export const getContent = (configPath: string, contentPath: string) => {
+    const yamlRelations = getRelationsFromYaml(configPath);
+    const contentEntries = readNetlifyContent<Collection>(contentPath);
+
+    const content = Object.fromEntries(contentEntries);
+
+    const resolvedFieldPaths = resolveFieldPaths(yamlRelations, content)
+    const resolvedRelations = resolveRelations(resolvedFieldPaths, content)
+
+    // TODO: TypeError: Converting circular structure to JSON
+
+    resolvedRelations.map(([field, collection]) => {
+        dot.copy(collection, field, content, content)
+    });
+
+    return content
+}
+

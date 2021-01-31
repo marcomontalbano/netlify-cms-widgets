@@ -37,6 +37,7 @@ export const readNetlifyContent = <T>(contentPath: string): ContentEntries<T> =>
     return contentEntries;
 }
 
+/*
 export const getForeignKey = (value: string, suffix: string = 'Id'): string | undefined => {
     const [, foreignKey] = new RegExp(`([\\S]+)${suffix}$`).exec(value) || [];
     return foreignKey
@@ -62,3 +63,4 @@ export const findInCollection = <T extends MaybeId>(entries: T | T[], id: string
     return hasManyIds ? [] : undefined
 }
 
+*/

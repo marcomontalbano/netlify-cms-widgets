@@ -1,7 +1,7 @@
 
 import mock from 'mock-fs';
 
-import { findInCollection, getForeignKey, readDirectoryAsJson, readdirSync, readFileAsJson, readNetlifyContent } from './utils';
+import { readDirectoryAsJson, readdirSync, readFileAsJson, readNetlifyContent } from './utils';
 
 describe('utils', () => {
 
@@ -66,78 +66,6 @@ describe('utils', () => {
                     ]],
                     ['profile', { id: '1', fullname: 'John Doe' }]
                 ])
-            })
-        })
-    })
-
-    describe('relations', () => {
-        describe('getForeignKey', () => {
-            it('should return undefined if the provided value is not valid', () => {
-                expect(getForeignKey('profile')).toBe(undefined)
-            })
-
-            it('should return the foreignKey for a given value', () => {
-                expect(getForeignKey('profileId')).toBe('profile')
-            })
-
-            it('should return the foreignKey for a given value and a gived suffix', () => {
-                expect(getForeignKey('userKey', 'Key')).toBe('user')
-            })
-        })
-
-        describe('findInCollection', () => {
-            it('should be able to filter a list of <T> by id ', () => {
-                const result = findInCollection([
-                    { id: '1', value: 'Value 1' },
-                    { id: '2', value: 'Value 2' }
-                ], '2')
-
-                expect(result).toStrictEqual({ id: '2', value: 'Value 2' })
-            })
-
-            it('should be able to filter a list of <T> by multiple ids ', () => {
-                const result = findInCollection([
-                    { id: '1', value: 'Value 1' },
-                    { id: '2', value: 'Value 2' },
-                    { id: '3', value: 'Value 3' }
-                ], ['1', '3', '4'])
-
-                expect(result).toStrictEqual([
-                    { id: '1', value: 'Value 1' },
-                    { id: '3', value: 'Value 3' },
-                ])
-            })
-
-            it('should be able to get the element if id is present', () => {
-                const result = findInCollection({ id: '1', value: 'Value 1' }, '1')
-
-                expect(result).toStrictEqual({ id: '1', value: 'Value 1' })
-            })
-
-            it('should be able to get the element if one of the ids is present', () => {
-                const result = findInCollection({ id: '1', value: 'Value 1' }, ['1', '2'])
-
-                expect(result).toStrictEqual({ id: '1', value: 'Value 1' })
-            })
-
-            it('should return undefined is id is not found', () => {
-                expect(
-                    findInCollection([{ id: '1', value: 'Value 1' }], '2')
-                ).toBe(undefined)
-
-                expect(
-                    findInCollection({ id: '1', value: 'Value 1' }, '2')
-                ).toBe(undefined)
-            })
-
-            it('should return an empty array if a list of ids is not found', () => {
-                expect(
-                    findInCollection([{ id: '1', value: 'Value 1' }], ['2'])
-                ).toStrictEqual([])
-
-                expect(
-                    findInCollection({ id: '1', value: 'Value 1' }, ['2'])
-                ).toStrictEqual([])
             })
         })
     })

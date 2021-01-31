@@ -81,7 +81,7 @@ const parseFields = (fields: Field[], prevName: string, memo: [string, string][]
     return memo
 }
 
-export const getRelations = (items: Collection[]): [string, string][] => {
+export const getRelations = (items: Collection[]): [fieldPath: string, relation: string][] => {
     return items.reduce((cv, collection) => {
         if ('folder' in collection) {
             return [
@@ -102,7 +102,7 @@ export const getRelations = (items: Collection[]): [string, string][] => {
     }, [] as any)
 }
 
-export const getRelationsFromYml = (path: string) => {
+export const getRelationsFromYaml = (path: string) => {
     const document = yaml.load(nodeFs.readFileSync(path, 'utf8')) as Yaml;
     return getRelations(document.collections);
 }
