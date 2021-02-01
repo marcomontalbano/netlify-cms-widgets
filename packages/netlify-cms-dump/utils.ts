@@ -36,31 +36,3 @@ export const readNetlifyContent = <T>(contentPath: string): ContentEntries<T> =>
 
     return contentEntries;
 }
-
-/*
-export const getForeignKey = (value: string, suffix: string = 'Id'): string | undefined => {
-    const [, foreignKey] = new RegExp(`([\\S]+)${suffix}$`).exec(value) || [];
-    return foreignKey
-}
-
-type MaybeId = {
-    id?: string
-}
-
-export const findInCollection = <T extends MaybeId>(entries: T | T[], id: string | string[]): T | T[] | undefined => {
-    const hasManyIds = Array.isArray(id)
-    const ids = hasManyIds ? id : [id];
-
-    if (Array.isArray(entries)) {
-        const filterMethod = hasManyIds ? 'filter' : 'find';
-        return entries[filterMethod](entry => entry.id && ids.includes(entry.id))
-    }
-
-    if (entries.id && ids.includes(entries.id)) {
-        return entries
-    }
-
-    return hasManyIds ? [] : undefined
-}
-
-*/

@@ -1,18 +1,16 @@
 import dot from 'dot-object'
 import { readNetlifyContent } from './utils';
-import { getRelationsFromYaml } from './yaml';
+import { getRelationsFromYaml, Relation } from './yaml';
 
 type Content = {
-    [collectionName: string]: Collection | Collection[] | undefined;
+    [collectionName: string]: Collection | Collection[];
 };
 
 type Collection = {
     [key: string]: unknown;
 };
 
-type ContentEntries = [string, Collection | Collection[]][];
-
-export const resolveNestedObjects = (keys: string[], content: { [k: string]: Collection | Collection[] }, currentIndex: number = 0, currentKey: string = '', memo: string[] = []) => {
+export const resolveNestedObjects = (keys: string[], content: Content, currentIndex: number = 0, currentKey: string = '', memo: string[] = []) => {
     const key = `${currentKey ? `${currentKey}.` : ''}${keys[currentIndex]}`;
 
     const currentContent = dot.pick(key, content)
@@ -37,16 +35,16 @@ export const resolveNestedObjects = (keys: string[], content: { [k: string]: Col
     return memo
 }
 
-export const resolveFieldPaths = (yamlRelations: [fieldPath: string, relation: string][], content: { [k: string]: Collection | Collection[]; }) => {
+export const resolveFieldPaths = (yamlRelations: Relation[], content: Content): Relation[] => {
     return yamlRelations.map(([fieldPath, relation]) => {
         return resolveNestedObjects(fieldPath.split('.'), content).map(resolvedFieldPath => ([
             resolvedFieldPath,
             relation
         ]));
-    }).flat() as [string, string][];
+    }).flat() as Relation[];
 }
 
-export function resolveRelations(resolvedFieldPaths: [fieldPath: string, relation: string][], content: { [k: string]: Collection | Collection[]; }) {
+export const resolveRelations = (resolvedFieldPaths: Relation[], content: Content): Relation[] => {
     return resolvedFieldPaths.map(([field, collection]) => {
         const collectionObject = dot.pick(collection, content);
         const fieldObject = dot.pick(field, content);
@@ -60,19 +58,19 @@ export function resolveRelations(resolvedFieldPaths: [fieldPath: string, relatio
 }
 
 export const getContent = (configPath: string, contentPath: string) => {
-    const yamlRelations = getRelationsFromYaml(configPath);
-    const contentEntries = readNetlifyContent<Collection>(contentPath);
+    const yamlRelations = getRelationsFromYaml(configPath)
+    const contentEntries = readNetlifyContent<Collection>(contentPath)
 
-    const content = Object.fromEntries(contentEntries);
+    const content = Object.fromEntries(contentEntries) as Content
 
     const resolvedFieldPaths = resolveFieldPaths(yamlRelations, content)
     const resolvedRelations = resolveRelations(resolvedFieldPaths, content)
 
-    // TODO: TypeError: Converting circular structure to JSON
+    resolvedRelations.map(([fieldPath, relation]) => {
+        dot.copy(relation, fieldPath, content, content)
+    })
 
-    resolvedRelations.map(([field, collection]) => {
-        dot.copy(collection, field, content, content)
-    });
+    // TODO: TypeError: Converting circular structure to JSON
 
     return content
 }
