@@ -1,13 +1,13 @@
 {
-  "name": "netlify-cms-dump",
+  "name": "netlify-cms-json-exporter",
   "version": "0.0.1",
-  "description": "",
+  "description": "Export all your Netlify CMS contents in a single json file with all relations resolved.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["netlify cms", "netlify", "cms", "export"],
+  "author": "Marco Montalbano <me@marcomontalbano.com>",
   "license": "MIT",
   "devDependencies": {
     "@types/mock-fs": "^4.13.0",

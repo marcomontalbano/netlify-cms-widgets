@@ -4,3 +4,4 @@ yarn-error.log
 /coverage
 /playground/dist
 /content
+/db.json

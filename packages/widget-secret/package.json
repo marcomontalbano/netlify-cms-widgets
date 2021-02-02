@@ -1,4 +1,5 @@
 {
     "name": "netlify-cms-widget-secret",
+    "private": true,
     "version": "1.0.0"
 }
