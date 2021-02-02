@@ -1,0 +1,16 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "command": {
+    "create": {
+      "license": "MIT",
+      "access": "public"
+    }
+  },
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--pure-lockfile"
+  ]
+}
