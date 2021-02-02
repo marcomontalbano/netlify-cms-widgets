@@ -5,3 +5,4 @@ yarn-error.log
 /playground/dist
 /content
 /db.json
+/packages/**/dist

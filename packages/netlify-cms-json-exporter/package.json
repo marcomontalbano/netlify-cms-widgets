@@ -2,7 +2,8 @@
   "name": "netlify-cms-json-exporter",
   "version": "0.0.1",
   "description": "Export all your Netlify CMS contents in a single json file with all relations resolved.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

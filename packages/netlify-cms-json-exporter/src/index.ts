@@ -1,8 +1,8 @@
 import dot from 'dot-object'
 
-import { Content, ContentCollection } from './src/types';
-import { readNetlifyContent, resolveFieldPaths, resolveRelations } from './src/utils';
-import { getRelationsFromYaml } from './src/yaml';
+import { Content, ContentCollection } from './types';
+import { readNetlifyContent, resolveFieldPaths, resolveRelations } from './utils';
+import { getRelationsFromYaml } from './yaml';
 
 export const getContent = (configPath: string, contentPath: string) => {
     const yamlRelations = getRelationsFromYaml(configPath)
