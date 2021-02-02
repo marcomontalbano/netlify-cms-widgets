@@ -1,5 +1,6 @@
 
 import mock from 'mock-fs';
+import { Content, ContentCollection } from './types';
 
 import { readDirectoryAsJson, readdirSync, readFileAsJson, readNetlifyContent, resolveNestedObjects, resolveFieldPaths, resolveRelations } from './utils';
 
@@ -202,9 +203,10 @@ describe('utils', () => {
 
     describe('resolveRelations', () => {
         it('should be able to resolve nested objects with array', () => {
-            const content = {
+            const content: Content<ContentCollection> = {
                 people: [
                     {
+                        id: '1',
                         name: 'John Doe',
                         links: [
                             { rel: '1' },
@@ -212,6 +214,7 @@ describe('utils', () => {
                         ]
                     },
                     {
+                        id: '2',
                         name: 'Foo Bar',
                         links: [
                             { rel: '2' },

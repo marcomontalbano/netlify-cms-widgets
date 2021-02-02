@@ -2,7 +2,7 @@ import dot from 'dot-object'
 import nodeFs from 'fs'
 import nodePath from 'path'
 
-import { Relation } from './yaml'
+import { Content, ContentEntries, Relation } from './types'
 
 export const readdirSync = (path: string): string[] => {
     return nodeFs.readdirSync(path).map((basename) => {
@@ -26,8 +26,6 @@ export const readDirectoryAsJson = <T>(directory: string): T[] => {
     return readdirSync(directory).map((file) => readFileAsJson<T>(file));
 }
 
-type ContentEntries<T> = [ name: string, entries: T | T[] ][];
-
 export const readNetlifyContent = <T>(contentPath: string): ContentEntries<T> => {
     const contentEntries: ContentEntries<T> = readdirSync(contentPath).map((filepath) => {
         if (nodeFs.lstatSync(filepath).isFile()) {
@@ -39,14 +37,6 @@ export const readNetlifyContent = <T>(contentPath: string): ContentEntries<T> =>
 
     return contentEntries;
 }
-
-type GenericObject = {
-    [key: string]: unknown;
-};
-
-type Content = {
-    [collectionName: string]: GenericObject | GenericObject[];
-};
 
 export const resolveNestedObjects = (keys: string[], content: { [key: string]: unknown }, currentIndex: number = 0, currentKey: string = '', memo: string[] = []) => {
     const key = `${currentKey ? `${currentKey}.` : ''}${keys[currentIndex]}`;
@@ -73,7 +63,7 @@ export const resolveNestedObjects = (keys: string[], content: { [key: string]: u
     return memo
 }
 
-export const resolveFieldPaths = (yamlRelations: Relation[], content: Content): Relation[] => {
+export const resolveFieldPaths = <T>(yamlRelations: Relation[], content: Content<T>): Relation[] => {
     return yamlRelations.map(([fieldPath, relation]) => {
         return resolveNestedObjects(fieldPath.split('.'), content).map(resolvedFieldPath => ([
             resolvedFieldPath,
@@ -82,15 +72,15 @@ export const resolveFieldPaths = (yamlRelations: Relation[], content: Content): 
     }).flat() as Relation[];
 }
 
-export const resolveRelations = (resolvedFieldPaths: Relation[], content: Content): Relation[] => {
-    return resolvedFieldPaths.map(([field, collection]) => {
-        const collectionObject = dot.pick(collection, content);
-        const fieldObject = dot.pick(field, content);
-        const collectionIndex = collectionObject.findIndex((obj: GenericObject) => obj.id === fieldObject);
+export const resolveRelations = <T extends { id: string }>(resolvedFieldPaths: Relation[], content: Content<T>): Relation[] => {
+    return resolvedFieldPaths.map(([fieldPath, relation]) => {
+        const fieldObject = dot.pick(fieldPath, content) as string;
+        const relationObject = dot.pick(relation, content) as T[];
+        const relationIndex = relationObject.findIndex(obj => obj.id === fieldObject);
 
         return [
-            field,
-            `${collection}[${collectionIndex}]`
+            fieldPath,
+            `${relation}[${relationIndex}]`
         ];
     });
 }
