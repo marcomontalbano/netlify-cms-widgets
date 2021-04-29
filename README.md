@@ -1,12 +1,12 @@
 # Netlify CMS • Widgets
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-id.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@0.0.2/dist/netlify-cms-widget-id.min.js"></script>
 <script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetId)</script>
 ```
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-secret.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@0.0.2/dist/netlify-cms-widget-secret.min.js"></script>
 <script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetSecret)</script>
 ```
 
