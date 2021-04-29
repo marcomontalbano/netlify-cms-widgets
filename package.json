@@ -1,23 +1,22 @@
 {
   "name": "netlify-cms-widgets",
   "private": true,
-  "version": "0.0.1",
   "description": "A collection of Netlify CMS widgets.",
   "workspaces": [
     "./packages/*"
   ],
   "scripts": {
-    "preinstall": "node -e \"if(process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('You must use Yarn to install, not NPM')\"",
     "clean": "npx rimraf node_modules */*/node_modules",
-    "lint": "tsc --noEmit",
-    "pretest": "yarn lint",
+    "ts:check": "tsc --noEmit",
+    "pretest": "yarn ts:check",
     "test": "jest",
     "prebuild": "yarn test",
     "build": "rollup -c rollup.config.js",
     "start": "npx concurrently -n netlify-cms-proxy-server,admin \"npx netlify-cms-proxy-server\" \"npx serve playground\"",
     "lerna:version": "lerna version",
     "prepublishOnly": "yarn build",
-    "lerna:publish": "lerna publish"
+    "lerna:publish": "lerna publish",
+    "version": "node update-readme.js && git add README.md"
   },
   "husky": {
     "hooks": {
