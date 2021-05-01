@@ -22,12 +22,13 @@ collections:
         fields:
           - { label: 'ID', name: 'id', widget: 'id' }
           - { label: 'Secret', name: 'secret', widget: 'secret' }
+          - { label: 'Rating', name: 'rating', widget: 'rating', max: 10 }
 
+      # https://www.netlifycms.org/docs/widgets/
       - name: 'default'
         label: 'Default'
         file: 'content/default.json'
         fields:
-          - { widget: 'id', label: 'ID', name: 'id' }
           - { widget: 'boolean', label: 'Bolean', name: 'bolean', default: true }
           - { widget: 'code', label: 'Code', name: 'code' }
           - { widget: 'color', label: 'Color', name: 'color', enableAlpha: true, allowInput: true }

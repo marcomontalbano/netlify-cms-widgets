@@ -10,6 +10,11 @@
 <script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetSecret)</script>
 ```
 
+```html
+<script src="https://cdn.jsdelivr.net/gh/marcomontalbano/netlify-cms-widgets@master/dist/netlify-cms-widget-rating.min.js"></script>
+<script>CMS.registerWidget(marcomontalbano.netlifyCmsWidgetRating)</script>
+```
+
 ## Development
 
 ```sh
