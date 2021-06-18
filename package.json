@@ -16,12 +16,8 @@
     "lerna:version": "lerna version",
     "prepublishOnly": "yarn build",
     "lerna:publish": "lerna publish",
-    "version": "node update-readme.js && git add README.md"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn build && git add -A dist"
-    }
+    "version": "node update-readme.js && git add README.md",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -52,7 +48,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "create-react-class": "^15.7.0",
-    "husky": "^4.3.8",
+    "husky": "^6.0.0",
     "jest": "^27.0.4",
     "lerna": "^4.0.0",
     "react": "^17.0.2",
